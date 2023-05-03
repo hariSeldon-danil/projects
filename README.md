@@ -11,13 +11,13 @@ As the snake grows longer, it becomes harder to control it without colliding wit
 
 1.  Download or clone the repository to your local machine
 2.  open terminal of that folder and type compilation command:
-'''sh
+```sh
 g++ -I ./framework/include -I ./concrete/include ./concrete/src/Board.cpp ./concrete/src/Level.cpp ./concrete/src/Snake.cpp ./concrete/src/Game.cpp     ./snake_game.cpp -o snake_game
-'''
+```
 3.  Run from terminal with the command:
-'''sh
+```sh
 ./snake_game
-'''
+```
 4.  chose the option y, hit enter and start playing
 5.  Use the arrow keys on your keyboard to control the direction of the snake
 6.  Eat the food to grow longer and try to avoid colliding with the walls or your own body
