@@ -16,6 +16,7 @@ Game::Game(): m_current_level(1)
 
 void Game::Start()
 {
+    fflush(stdin);
     bool level_success = true;
     char input;
     
@@ -28,18 +29,16 @@ void Game::Start()
 
         if(input == 'y')
         {
-            while(1)
+            
+            level_success = m_levels[m_current_level]->StartLevel();
+            if(level_success == false)
             {
-                level_success = m_levels[m_current_level]->StartLevel();
-                if(level_success == false)
-                {
-                    std::cout << "Wrong move! Game over\n"; //to add try again?
-                    break;
-                }
-                else
-                {
-                    ++m_current_level;
-                }
+                std::cout << "Wrong move! Game over\n"; //to add try again?
+                break;
+            }
+            else
+            {
+                ++m_current_level;
             }
         }
         else if(input == 'q')
@@ -47,7 +46,7 @@ void Game::Start()
         
             std::cout << "Sorry to see you go\n";
             break;
-        }
+        } 
 
     }
 
@@ -61,7 +60,7 @@ void Game::Start()
     when level is finished successfuly:
         current level will increase and thread will run next level 
     
-    */
+   */ 
 }
 /*
 void Game::End()

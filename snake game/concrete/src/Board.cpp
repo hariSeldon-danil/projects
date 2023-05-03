@@ -73,7 +73,6 @@ void Board::CheckFood()
 
 void Board::DrawTable()
 {
-     
     //clear table
     system("clear");
 

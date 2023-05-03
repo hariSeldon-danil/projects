@@ -2,10 +2,12 @@
 #define __BOARD_HPP__
 
 #include <vector>
+//#include <thread>
 
 #include "IBoard.hpp"
 #include "Snake.hpp"
 #include "Prey.hpp"
+#include "IMonster.hpp"
 
 class Board : public IBoard
 {
@@ -15,7 +17,7 @@ class Board : public IBoard
     std::vector<std::vector<char>> m_table;
     IPrey *m_prey;
     IMonster *m_snake;
-    
+    //std::thread m_thread;
 
 
     void InitTable();
@@ -30,7 +32,7 @@ class Board : public IBoard
     {
         InitTable();
         PlacePrey(m_prey);
-        
+        //m_thread = std::thread(&Board::DrawTable, this);
     }
     ~Board();
     IMonster *GetMonster();
