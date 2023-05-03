@@ -10,7 +10,7 @@ As the snake grows longer, it becomes harder to control it without colliding wit
 ## How to Play
 
 1.  Download or clone the repository to your local machine
-2.  open terminal of that folder and type compilation command:
+2.  open terminal and navigate into snake_game folder and type compilation command:
 ```sh
 g++ -I ./framework/include -I ./concrete/include ./concrete/src/Board.cpp ./concrete/src/Level.cpp ./concrete/src/Snake.cpp ./concrete/src/Game.cpp     ./snake_game.cpp -o snake_game
 ```
