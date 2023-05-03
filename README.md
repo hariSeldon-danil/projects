@@ -31,6 +31,7 @@ g++ -I ./framework/include -I ./concrete/include ./concrete/src/Board.cpp ./conc
 'q' - quit game
 
 ## Future Improvements
+* implement pause option
 * add score to eack body link added
 * set score per body link per level
 * use threads for game and/or display
