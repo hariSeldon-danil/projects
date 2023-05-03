@@ -31,5 +31,6 @@ g++ -I ./framework/include -I ./concrete/include ./concrete/src/Board.cpp ./conc
 'q' - quit game
 
 ## Future Improvements
-* add score and limit each level with score values
+* add score to eack body link added
+* set score per body link per level
 * use threads for game and/or display
