@@ -1,6 +1,6 @@
 # snake game
 ## Description
-This is a simple classic snake game built using C++ programming language
+A simple classic snake game built using C++ programming language
 
 ## Game Overview
 
@@ -22,3 +22,6 @@ The objective of the game is to control the snake to eat the food and grow longe
 'd' - go right
 'q' - quit game
 
+## Future Improvements
+* add score and limit each level with score values
+* use threads for game and/or display
