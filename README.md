@@ -5,7 +5,8 @@ A simple classic snake game built using C++ programming language
 ## Game Overview 
 
 The objective of the game is to control the snake ,eat the food and grow longer. 
-As the snake grows longer, it becomes harder to control it without colliding with the walls or the snake's own body. If this happens the game is over
+As the snake grows longer, it becomes harder to control it without colliding with the walls or the snake's own body. If this happens the game is over.
+Game has several levels- in each level the board gets smaller
 
 ## How to Play
 
@@ -32,6 +33,4 @@ g++ -I ./framework/include -I ./concrete/include ./concrete/src/Board.cpp ./conc
 
 ## Future Improvements
 * implement pause option
-* add score to eack body link added
-* set score per body link per level
 * use threads for game and/or display
