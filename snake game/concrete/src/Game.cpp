@@ -59,6 +59,7 @@ void Game::Start()
             if(level_success == false)
             {
                 std::cout << "Wrong move! Game over\n";
+                break;
             }
             else
             {

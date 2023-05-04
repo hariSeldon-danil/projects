@@ -6,127 +6,112 @@ Snake::Snake(int height, int width):
         m_body_links(1),
         m_rows(height),
         m_cols(width),
-        m_head(std::make_pair<int, int>(height /2, width/2)),   //place snake head at center
-        m_tail(std::make_pair<int, int>(height /2+1, width/2))    //tail lower than head
+        m_head(std::make_pair<int, int>(height /2, width/2))   //place snake head at center
 {
-    m_snake = std::vector<std::vector<char>>(height, std::vector<char>(width,' '));
-    m_snake[m_head.first][m_head.second] = '@';
-    m_snake[m_tail.first][m_tail.second] = '#';
+    m_snake_body.push_back(std::make_pair(height /2 +1, width/2));//first link of body, right behind head
 }
 
 Snake::~Snake()
 {
-    for(auto it : m_snake)
-    {
-        it.clear();
-    }
 }
 
 void Snake::EatAndGrow()
 {
-    if(m_tail.second < m_cols)
+    std::pair<int, int> tail = m_snake_body.back();
+    
+    //tail at top left corner
+    if(tail.first == 0 && tail.second == 0)  
     {
-        ++m_tail.second;
-        m_snake[m_tail.first][m_tail.second] = '#';
+        m_snake_body.push_back(std::make_pair(tail.first, tail.second +1));
     }
+    //tail at top right corner
+    else if(tail.first == 0 && tail.second == m_cols -1)
+    {
+        m_snake_body.push_back(std::make_pair(tail.first + 1, tail.second));
+    }
+    //tail at buttom left corner
+    else if(tail.first == m_rows - 1 && tail.second == 0)
+    {
+        m_snake_body.push_back(std::make_pair(tail.first + 1, tail.second));
+    }
+    //tail at buttom right corner
+    else if(tail.first == m_rows - 1 && tail.second == m_rows - 1)
+    {
+        m_snake_body.push_back(std::make_pair(tail.first, tail.second -1));
+    }
+    //add below
     else
     {
-        ++m_tail.first;
-        m_snake[m_tail.first][m_tail.second] = '#';
+        m_snake_body.push_back(std::make_pair(tail.first, tail.second +1));
     }
+
     ++m_body_links;
 }
 
-void Snake::UpdateTail()
+bool Snake::SearchValue(Position p, int value)
 {
-    //tail goes up
-    if(m_tail.first > 0 && m_snake[m_tail.first - 1][m_tail.second] == '#')
+    if(p == ROW)
     {
-        --m_tail.first;
+        for(auto it : m_snake_body)
+        {
+            if (it.first == value)
+            {
+                return true;
+            }
+        }
     }
+    else
+    {
+        for(auto it : m_snake_body)
+        {
+            if (it.second == value)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
-    //tail goes down
-    else if(m_tail.first < m_rows-1 && m_snake[m_tail.first + 1][m_tail.second] == '#')
-    {
-        ++m_tail.first;
-    }
+void Snake::AdjustSnake()
+{
+    //place former head in body
+        m_snake_body.emplace(m_snake_body.begin(), m_head);
 
-    //tail goes left
-    else if(m_tail.second > 0 && m_snake[m_tail.first][m_tail.second -1] == '#')
-    {
-        --m_tail.second;
-    }
-
-    //tail goes right
-    else if(m_tail.second < m_cols -1 && m_snake[m_tail.first][m_tail.second +1] == '#')
-    {
-        ++m_tail.second;
-    }
+        //delete tail
+        m_snake_body.pop_back();
 }
 
 bool Snake::MoveUp()
 {
     //check head not touching border nor self
-    if(m_head.first == 0 || m_snake[m_head.first -1][m_head.second] == '#')
+    if(m_head.first == 0 || SearchValue(ROW, m_head.first -1))
     {
         return false;
     }
     else    //move snake and update head and tail
     {
-        int x = m_head.first;
-        int y = m_head.second;
-        m_snake[m_tail.first][m_tail.second] = ' ';
-        //where head was- body is :)
-        m_snake[m_head.first][m_head.second] = '#';
-        //update head
-        --m_head.first;
-        //set head
-        m_snake[m_head.first][m_head.second] = '@';
-        
-        //tail
+        AdjustSnake();
 
-        //update tail
-        if(m_body_links > 1)
-        {
-            UpdateTail();
-        }
-        else
-        {
-            m_tail = std::make_pair(x, y);
-        }
+        //update head position
+        --m_head.first;
     }
     return true;
 }
 
 bool Snake::MoveDown()
 {
-    if(m_head.first == m_rows-1 || m_snake[m_head.first +1][m_head.second] == '#')
+    //check head not touching border nor self
+    if(m_head.first == m_rows -1 || SearchValue(ROW, m_head.first + 1))
     {
         return false;
     }
     else    //move snake and update head and tail
     {
-        int x = m_head.first;
-        int y = m_head.second;
-        m_snake[m_tail.first][m_tail.second] = ' ';
-        //where head was- body is :)
-        m_snake[m_head.first][m_head.second] = '#';
-        //update head
-        ++m_head.first;
-        //set head
-        m_snake[m_head.first][m_head.second] = '@';
-        
-        //tail
+        AdjustSnake();
 
-        //update tail
-        if(m_body_links > 1)
-        {
-            UpdateTail();
-        }
-        else
-        {
-            m_tail = std::make_pair(x, y);
-        }
+        //update head position
+        ++m_head.first;
     }
     return true;
 }
@@ -134,30 +119,16 @@ bool Snake::MoveDown()
 bool Snake::MoveLeft()
 {
     //check head not touching border nor self
-    if(m_head.second == 0 || m_snake[m_head.first][m_head.second -1] == '#')
+    if(m_head.second == 0 || SearchValue(COL, m_head.second - 1))
     {
         return false;
     }
     else    //move snake and update head and tail
     {
-        int x = m_head.first;
-        int y = m_head.second;
-        m_snake[m_tail.first][m_tail.second] = ' ';
-        //head
-        m_snake[m_head.first][m_head.second] = '#';
-        //tail
-        --m_head.second;
-        m_snake[m_head.first][m_head.second] = '@';
+        AdjustSnake();
 
-        //update tail
-        if(m_body_links > 1)
-        {
-            UpdateTail();
-        }
-        else
-        {
-            m_tail = std::make_pair(x, y);
-        }
+        //update head position
+        --m_head.second;
     }
     return true;
 }
@@ -165,30 +136,16 @@ bool Snake::MoveLeft()
 bool Snake::MoveRight()
 {
     //check head not touching border nor self
-    if(m_head.second == m_cols -2 || m_snake[m_head.first][m_head.second +1] == '#')
+    if(m_head.second == m_cols -2 || SearchValue(COL, m_head.second + 1))
     {
         return false;
     }
     else    //move snake and update head and tail
     {
-        int x = m_head.first;
-        int y = m_head.second;
-        //head
-        m_snake[m_tail.first][m_tail.second] = ' ';
-        m_snake[m_head.first][m_head.second] = '#';
-        ++m_head.second;
-        m_snake[m_head.first][m_head.second] = '@';
+        AdjustSnake();
 
-        //tail
-        //update tail
-        if(m_body_links > 1)
-        {
-            UpdateTail();
-        }
-        else
-        {
-            m_tail = std::make_pair(x, y);
-        }
+        //update head position
+        ++m_head.second;
     }
     return true;
 }

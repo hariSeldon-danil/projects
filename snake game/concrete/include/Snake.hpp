@@ -7,32 +7,40 @@
 
 class Snake : public IMonster
 {
-    private:
-    int m_body_links;
-    int m_rows;
-    int m_cols;
-    std::pair<int, int> m_head; //@
-    std::pair<int, int> m_tail; //row, col
-    std::vector<std::vector<char>> m_snake;
-    void UpdateTail();
+    
     
     public:
     Snake(int height, int width);
     ~Snake();
 
-    
+    enum Position
+    {
+        ROW,
+        COL
+    };
+
     bool MoveUp();
     bool MoveDown();
     bool MoveLeft();
     bool MoveRight();
     void EatAndGrow();
-    inline const std::vector<std::vector<char>>& GetMonsterBody() const;
+    inline const std::vector<std::pair<int, int>>& GetMonsterBody() const;
     inline const std::pair<int, int> GetHead() const;
+
+    private:
+    int m_body_links;
+    int m_rows;
+    int m_cols;
+    std::pair<int, int> m_head; //@
+    std::vector<std::pair<int, int>> m_snake_body;
+    bool SearchValue(Position p, int value);
+    void AdjustSnake();
+   
 };
 
-const std::vector<std::vector<char>>& Snake::GetMonsterBody() const
+const std::vector<std::pair<int, int>>& Snake::GetMonsterBody() const
 {
-    return m_snake;
+    return m_snake_body;
 }
 
 const std::pair<int, int> Snake::GetHead() const

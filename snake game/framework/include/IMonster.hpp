@@ -6,7 +6,7 @@
 class IMonster
 {
     public:
-    virtual const std::vector<std::vector<char>>& GetMonsterBody() const = 0;
+    virtual const std::vector<std::pair<int, int>>& GetMonsterBody() const = 0;
     virtual const std::pair<int, int> GetHead() const = 0;
     virtual bool MoveUp() = 0;
     virtual bool MoveDown() = 0;

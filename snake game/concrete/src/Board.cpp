@@ -40,6 +40,14 @@ void Board::InitTable()
         }
 }
 
+void Board::ClearTable(std::vector<std::pair<int, int>>& snake_body)
+{
+    for(auto it : snake_body)
+    {
+        m_table[it.first][it.second] = ' ';
+    }
+}
+
 void Board::PlacePrey(IPrey* prey)
 {
     srand(time(0));
@@ -83,9 +91,20 @@ void Board::DrawTable()
     std::cout <<
     "*\tup press w\t\t\t*\n*\tdown press s\t\t*\n*\tleft press a\t\t*\n*\tright press d\t\t*\n*\tquit press q\t\t*\n";
 
+    //place prey
     std::pair<int, int> prey_position = m_prey->GetPosition();
-    //snake position
-    std::vector<std::vector<char>> snake = m_snake->GetMonsterBody();
+    m_table[prey_position.first][prey_position.second] = '$';
+    
+    //place snake head
+    std::pair<int, int> head = m_snake->GetHead();
+    m_table[head.first][head.second] = '@';
+
+    //place snake body
+    std::vector<std::pair<int, int>> snake_body = m_snake->GetMonsterBody();
+    for (auto it : snake_body)
+    {
+        m_table[it.first][it.second] = '#';
+    }
     
     //print
     std::cout << std::endl;
@@ -93,23 +112,16 @@ void Board::DrawTable()
     {
         for(int j = 0; j < m_cols; ++j)
         {
-            if(i > 0 && i < m_rows -1 && j > 0 && j < m_cols -3)
-            {
-                if(i-1 == prey_position.first && j-1 == prey_position.second && snake[i-1][j-1] == ' ')
-                {
-                    std::cout << '$';
-                }
-                else
-                {
-                    std::cout << snake[i-1][j-1];   
-                }
-            }
-            else
-            {
-                std::cout << m_table[i][j];
-            }
+            std::cout << m_table[i][j];
         }
     }
     std::cout << std::endl;
+    
     fflush(stdin);
+    
+    //clear table
+    m_table[prey_position.first][prey_position.second] = ' ';
+    m_table[head.first][head.second] = ' ';
+    ClearTable(snake_body);
+
 }

@@ -94,7 +94,7 @@ bool Level::StartLevel()
         else
         {
             m_board->CheckFood();
-            m_board->DrawTable();
+            //m_board->DrawTable();
 
         }
         //check score

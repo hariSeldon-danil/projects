@@ -2,6 +2,8 @@
 #define __BOARD_HPP__
 
 #include <vector>
+#include <iostream>
+#include <utility>
 
 #include "IBoard.hpp"
 #include "Snake.hpp"
@@ -20,6 +22,7 @@ class Board : public IBoard
 
     void InitTable();
     void PlacePrey(IPrey* prey);
+    void ClearTable(std::vector<std::pair<int, int>>& snake_body);
 
     public:
     
