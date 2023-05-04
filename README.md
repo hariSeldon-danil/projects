@@ -2,7 +2,7 @@
 ## Description
 A simple classic snake game built using C++ programming language
 
-## Game Overview
+## Game Overview 
 
 The objective of the game is to control the snake ,eat the food and grow longer. 
 As the snake grows longer, it becomes harder to control it without colliding with the walls or the snake's own body. If this happens the game is over
