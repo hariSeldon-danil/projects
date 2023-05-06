@@ -13,11 +13,11 @@ Game has several levels- in each level the board gets smaller
 1.  Download or clone the repository to your local machine
 2.  open terminal and navigate into snake_game folder and type compilation command:
 ```sh
-g++ -I ./framework/include -I ./concrete/include ./concrete/src/Board.cpp ./concrete/src/Level.cpp ./concrete/src/Snake.cpp ./concrete/src/Game.cpp ./concrete/src/LevelScore.cpp ./concrete/src/GameScore.cpp ./snake_main.cpp -o snake_game
+make
 ```
 3.  Run from terminal with the command:
 ```sh
-./snake_game
+./Snake_Game.out
 ```
 4.  Hit y and start playing
 5.  Use the designated keys on your keyboard to control the direction of the snake
