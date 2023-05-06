@@ -19,8 +19,8 @@ g++ -I ./framework/include -I ./concrete/include ./concrete/src/Board.cpp ./conc
 ```sh
 ./snake_game
 ```
-4.  chose the option y, hit enter and start playing
-5.  Use the arrow keys on your keyboard to control the direction of the snake
+4.  Hit y and start playing
+5.  Use the designated keys on your keyboard to control the direction of the snake
 6.  Eat the food to grow longer and try to avoid colliding with the walls or your own body
 
 ## Keys action
