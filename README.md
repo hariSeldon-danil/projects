@@ -34,3 +34,4 @@ make
 ## Future Improvements
 * implement pause option
 * use threads for game and/or display
+* make snake movement OOP
